@@ -75,5 +75,9 @@ class PhonesController extends \BaseController {
 	{
 		//
 	}
+        
+        public function brands($id){
+            return Phone::where('brandId', '=', $id)->get();
+        }
 
 }

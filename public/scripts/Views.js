@@ -1,9 +1,26 @@
 App.Views.AppView = Backbone.View.extend({
     
+    initialize: function() {
+      vent.on('brand:selected', this.displayPhones, this);  
+    },
+    
     render: function() {
         var view = new App.Views.Brands({ collection: this.collection });
         view.render().el;
         return this;
+    },
+    
+    displayPhones: function(id) {
+        var brandName = _.filter(this.collection.toJSON(), function(brand){ return brand.id == id; })[0].brandName;
+        
+        var phones = new App.Collections.Phones();
+        phones.url = 'phones/brand/'+id;
+        phones.fetch().then(function(){
+            var phonesDisplay = new App.Views.Phones({ collection: phones, brand: brandName });
+            $("#phones").css('display', 'block');
+            $("#phonesCollection").remove();
+            $('#phonesCollectionHeader').after(phonesDisplay.render().el);
+        });
     }
 });
 
@@ -40,7 +57,7 @@ App.Views.Brand = Backbone.View.extend({
     },
     
     brandSelected: function() {
-            console.log(this.model);
+        vent.trigger('brand:selected', this.model.id);
     }
 });
 
@@ -49,7 +66,8 @@ App.Views.Brand = Backbone.View.extend({
  */
 
 App.Views.Phones = Backbone.View.extend({
-   tagName: 'tbody',
+    tagName: 'tbody',
+    id: 'phonesCollection',
    
     render: function() {
         this.collection.each(this.addOne, this);
@@ -57,7 +75,7 @@ App.Views.Phones = Backbone.View.extend({
     },
     
     addOne: function(phone){
-        var phone = new App.Views.Phone({ model: phone });
+        var phone = new App.Views.Phone({ model: phone, brand: this.options.brand });
         this.$el.append(phone.render().el);
     }
 });
@@ -72,8 +90,9 @@ App.Views.Phone = Backbone.View.extend({
     },
     
     render: function() {
+        this.model.set('brandName', this.options.brand);
         this.$el.attr('id',this.model.get('id'));
-        this.$el.html( this.template( this.model.toJSON() ) );
+        this.$el.html( this.template( this.model.toJSON() ));
         return this;
     },
             

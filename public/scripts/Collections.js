@@ -1,6 +1,5 @@
 App.Collections.Phones = Backbone.Collection.extend({   
-   model: App.Models.Phones,
-   url: 'phones'
+   model: App.Models.Phones
 });
 
 App.Collections.Brands = Backbone.Collection.extend({   

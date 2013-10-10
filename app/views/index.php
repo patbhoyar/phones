@@ -32,13 +32,15 @@
     
     <div class="container">
         <div class="span3" id="phones">
-            <table class="table table-hover" id="phonesCollection">
-                <thead>
-                    <tr> <th> <i class="icon-star"></i> Brand</th> <th>Phone Name</th> </tr>
+            <table class="table table-hover" id="phonesTable">
+                <thead  id="phonesCollectionHeader">
+                    <tr> <th><i class="icon-star"></i> Phone Name</th> </tr>
                 </thead>
-                <script id="phonesTemplate" type="text/template">
-                     <td><%= brandName %></td> <td><%= modelName %></td>
-                </script>
+                <tbody id="phonesCollection">
+                    <script id="phonesTemplate" type="text/template">
+                         <td><%= modelName %></td>
+                    </script>
+                </tbody>
             </table>
         </div>
         
@@ -77,8 +79,6 @@
             
         </div>
     </div>
-    
-    
     
     
     <script src="scripts/underscore.js"></script>

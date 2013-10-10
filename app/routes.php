@@ -14,6 +14,8 @@
 Route::resource('brands', 'BrandsController');
 Route::resource('phones', 'PhonesController');
 
+Route::get('phones/brand/{id}', 'PhonesController@brands');
+
 Route::get('/', function()
 {
 	return View::make('index');

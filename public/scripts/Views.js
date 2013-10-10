@@ -1,7 +1,8 @@
 App.Views.AppView = Backbone.View.extend({
     
     initialize: function() {
-      vent.on('brand:selected', this.displayPhones, this);  
+      vent.on('brand:selected', this.displayPhones, this); 
+      vent.on('phone:selected', this.createDisplayforPhone, this);  
     },
     
     render: function() {
@@ -22,6 +23,22 @@ App.Views.AppView = Backbone.View.extend({
             $("#phones").css('display', 'block');
             $("#phonesCollection").remove();
             $('#phonesCollectionHeader').after(phonesDisplay.render().el);
+        });
+    },
+            
+    createDisplayforPhone: function(id){
+        var phone = new App.Collections.Phones();
+        phone.url = 'phones/'+id;
+        phone.fetch().then(function(){
+            var phoneModel = phone.models[0];
+            var brand = new App.Collections.Brands();
+            brand.url = 'brands/'+phoneModel.get('brandId');
+            brand.fetch().then(function(){
+                var theBrand = brand.toJSON()[0].brandName;
+                phoneModel.set('brandName', theBrand);
+                var phoneInfo = new App.Views.DisplayPhoneInfo({model: phoneModel});
+                $("#phoneDisplay").html(phoneInfo.render().el) ; 
+            });
         });
     }
 });
@@ -72,6 +89,10 @@ App.Views.Brand = Backbone.View.extend({
 App.Views.Phones = Backbone.View.extend({
     tagName: 'tbody',
     id: 'phonesCollection',
+    
+    initialize: function() {
+        vent.on('phone:selected', this.remove, this);   
+    },
    
     render: function() {
         this.collection.each(this.addOne, this);
@@ -81,6 +102,10 @@ App.Views.Phones = Backbone.View.extend({
     addOne: function(phone){
         var phone = new App.Views.Phone({ model: phone, brand: this.options.brand });
         this.$el.append(phone.render().el);
+    },
+            
+    method: function() {
+        $("#phonesCollection").remove();   
     }
 });
 

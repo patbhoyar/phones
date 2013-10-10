@@ -6,6 +6,6 @@ App.Router = Backbone.Router.extend({
     
     getPhone: function(id) {
         console.log("triggering");
-        vent.trigger('phone:show', id);
+        vent.trigger('phone:selected', id);
     }
 });

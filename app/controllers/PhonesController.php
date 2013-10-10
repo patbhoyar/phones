@@ -40,7 +40,7 @@ class PhonesController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+            return Phone::find($id);
 	}
 
 	/**
@@ -51,7 +51,6 @@ class PhonesController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
 	}
 
 	/**

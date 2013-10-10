@@ -40,7 +40,7 @@ class BrandsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+            return Brand::find($id);
 	}
 
 	/**

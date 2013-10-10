@@ -11,6 +11,7 @@
 |
 */
 
+Route::resource('brands', 'BrandsController');
 Route::resource('phones', 'PhonesController');
 
 Route::get('/', function()

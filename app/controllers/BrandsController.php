@@ -1,6 +1,6 @@
 <?php
 
-class PhonesController extends \BaseController {
+class BrandsController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +9,7 @@ class PhonesController extends \BaseController {
 	 */
 	public function index()
 	{
-            return Phone::all();
+            return Brand::all();
 	}
 
 	/**

@@ -23,11 +23,12 @@
     
     <div class="container" id="phoneBrandsContainer">
         <div class="span3"></div>
-        <div class="btn-group text-center span6" id="phoneBrands"></div>
+        <div class="btn-group text-center span6" id="phoneBrands">
+        </div>
         <div class="span3"></div>
     </div>
     
-    
+    <br>
     
     <div class="container">
         <div class="span3" id="phones">
@@ -45,7 +46,7 @@
         <div class="span6">
             
             <div id="imageContainer" style="width:570px; height: 380px;">
-                <img id="theImage" src="images/iphone5c.jpg" width="570" height="380"/>
+                <img id="theImage" src="" width="570" height="380"/>
             </div>
             <div id="phoneDisplay">
                 
@@ -83,6 +84,30 @@
     <script src="scripts/underscore.js"></script>
     <script src="scripts/jquery.js"></script>
     <script src="scripts/backbone.js"></script>
+    
+    <script>
+        (function(){
+
+            window.App = {
+               Models: {},
+               Views: {},
+               Collections: {},
+               Router: {}
+            };
+
+            window.template = function(id){
+                return _.template($("#"+id).html());
+            };
+
+            window.vent = _.extend({}, Backbone.Events);
+
+        })();
+    </script>
+    
+    <script src="scripts/Models.js"></script>
+    <script src="scripts/Collections.js"></script>
+    <script src="scripts/Views.js"></script>
+    <script src="scripts/Routers.js"></script>
     <script src="scripts/main.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 

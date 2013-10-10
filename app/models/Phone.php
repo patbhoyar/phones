@@ -54,11 +54,11 @@ class Phone extends Eloquent implements UserInterface, RemindableInterface {
             return $this->hasOne('brandId');
         }
         
-        protected function getAllPhones(){
-            return DB::table('phones')
-                ->select('phones.id', 'phones.modelName', 'phones.launchYear', 'phones.unitsSold', 'phones.image', 'brands.brandName')
-                ->leftJoin('brands', 'phones.brandId', '=', 'brands.id')
-                ->get();
-        }
+//        protected function getAllPhones(){
+//            return DB::table('phones')
+//                ->select('phones.id', 'phones.modelName', 'phones.launchYear', 'phones.unitsSold', 'phones.image', 'brands.brandName')
+//                ->leftJoin('brands', 'phones.brandId', '=', 'brands.id')
+//                ->get();
+//        }
 
 }

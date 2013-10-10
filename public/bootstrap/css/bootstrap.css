@@ -6316,3 +6316,7 @@ button.close {
 body {
   padding-top: 60px;
 }
+
+#phonesCollection{
+    display: none;
+}

@@ -30,7 +30,6 @@ App.Views.AppView = Backbone.View.extend({
 
 App.Views.Brands = Backbone.View.extend({
     el:'#phoneBrands',
-    className: 'btn-group',
     
     render: function() {
         var sortedBrands = _.sortBy(this.collection.toJSON(), function(brand){ return brand.brandName; })
@@ -46,8 +45,7 @@ App.Views.Brands = Backbone.View.extend({
 
 App.Views.Brand = Backbone.View.extend({
     tagName: 'button',
-    className: 'btn btn-default',
-    type: 'button',
+    className: 'btn',
     
     events: {
       'click': 'brandSelected' 

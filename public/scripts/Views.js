@@ -11,6 +11,8 @@ App.Views.AppView = Backbone.View.extend({
     },
     
     displayPhones: function(id) {
+        vent.trigger('phoneInfo:remove');
+
         var brandName = _.filter(this.collection.toJSON(), function(brand){ return brand.id == id; })[0].brandName;
         
         var phones = new App.Collections.Phones();
@@ -30,6 +32,7 @@ App.Views.AppView = Backbone.View.extend({
 
 App.Views.Brands = Backbone.View.extend({
     el:'#phoneBrands',
+    className: 'btn-group',
     
     render: function() {
         var sortedBrands = _.sortBy(this.collection.toJSON(), function(brand){ return brand.brandName; })
@@ -45,7 +48,8 @@ App.Views.Brands = Backbone.View.extend({
 
 App.Views.Brand = Backbone.View.extend({
     tagName: 'button',
-    className: 'btn',
+    className: 'btn btn-default',
+    type: 'button',
     
     events: {
       'click': 'brandSelected' 
@@ -99,7 +103,7 @@ App.Views.Phone = Backbone.View.extend({
     displayPhone: function() {
         appRouter.navigate('phone/'+this.model.get('id'));
         
-        var displayPhone = new App.Views.DisplayPhone({ model: this.model });
+        var displayPhone = new App.Views.DisplayPhoneInfo({ model: this.model });
         $("#phoneDisplay").html(displayPhone.render().el) ;
     }
 });
@@ -108,9 +112,13 @@ App.Views.Phone = Backbone.View.extend({
  * Display Phones View
  */
 
-App.Views.DisplayPhone = Backbone.View.extend({
+App.Views.DisplayPhoneInfo = Backbone.View.extend({
     tagName: 'table',
     className: 'table',
+    
+    initialize: function() {
+      vent.on('phoneInfo:remove', this.remove, this);  
+    },
     
     template: window.template('phoneDisplayTemplate'),
     
@@ -120,14 +128,26 @@ App.Views.DisplayPhone = Backbone.View.extend({
         this.$el.remove();
         this.$el.html(this.template(this.model.toJSON()));   
         return this;
+    },
+    
+    remove: function() {
+        this.$el.remove();
     }
 });
 
 App.Views.displayImage = Backbone.View.extend({
     el: '#theImage',
+    
+    initialize: function() {
+      vent.on('phoneInfo:remove', this.remove, this);  
+    },
             
     render: function() {
         this.$el.attr('src', this.model.get('image'));
         return this;
-    }        
+    },
+    
+    remove: function() {
+        this.$el.attr('src', '');
+    }     
 });
